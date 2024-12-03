@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 
+import datetime
+import json
 import logging
+import time
+
 import requests
 
 from lib import serial
@@ -38,13 +42,31 @@ def main():
     while True:
         # 센서에서 데이터 수신
         data = ser.json()
+        logging.info(f'{json.dumps(data)}')
+
+        now = datetime.datetime.now()
+
 
         # 서버에 데이터 전송
-        res = requests.post(TARGET_URL, data=data)
+        res = requests.post(TARGET_URL, data={
+            'direction': '+y',
+            'position': data['Mv'],
+            'echo_cm': data['L_Dist'],
+            'timestamp': now,
+        })
         res.raise_for_status()
-
         logging.info(f'{res.status_code} {res.json()}')
 
+        res = requests.post(TARGET_URL, data={
+            'direction': '-y',
+            'position': data['Mv'],
+            'echo_cm': data['R_Dist'],
+            'timestamp': now,
+        })
+        res.raise_for_status()
+        logging.info(f'{res.status_code} {res.json()}')
+
+        time.sleep(0.2)
 
 if __name__ == '__main__':
     main()
