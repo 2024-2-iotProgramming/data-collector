@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import datetime
 import json
 import logging
 import time
@@ -44,15 +43,11 @@ def main():
         data = ser.json()
         logging.info(f'{json.dumps(data)}')
 
-        now = datetime.datetime.now()
-
-
         # 서버에 데이터 전송
         res = requests.post(TARGET_URL, data={
             'x': 1,
             'y': data['Mv'],
             'echo_cm': data['L_Dist'],
-            'timestamp': now,
         })
         res.raise_for_status()
         logging.info(f'{res.status_code} {res.json()}')
@@ -61,7 +56,6 @@ def main():
             'x': 0,
             'y': data['Mv'],
             'echo_cm': data['R_Dist'],
-            'timestamp': now,
         })
         res.raise_for_status()
         logging.info(f'{res.status_code} {res.json()}')
