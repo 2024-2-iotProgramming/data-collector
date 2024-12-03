@@ -49,8 +49,8 @@ def main():
 
         # 서버에 데이터 전송
         res = requests.post(TARGET_URL, data={
-            'direction': '+y',
-            'position': data['Mv'],
+            'x': 1,
+            'y': data['Mv'],
             'echo_cm': data['L_Dist'],
             'timestamp': now,
         })
@@ -58,8 +58,8 @@ def main():
         logging.info(f'{res.status_code} {res.json()}')
 
         res = requests.post(TARGET_URL, data={
-            'direction': '-y',
-            'position': data['Mv'],
+            'x': 0,
+            'y': data['Mv'],
             'echo_cm': data['R_Dist'],
             'timestamp': now,
         })
