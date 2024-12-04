@@ -11,8 +11,8 @@ from serial.tools.list_ports_common import ListPortInfo
 def _DEFAULT_DUMMY_SERIAL_READLINE() -> str:
     """더미로 건네주어야 하는 데이터를 생성하는 함수"""
     return json.dumps({
-        'L_Dist': random.random() * 200,
-        'R_Dist': random.random() * 200,
+        'L_Dist': random.randint(200, 20000) / 100,
+        'R_Dist': random.randint(200, 20000) / 100,
         'Mv': random.randint(0, 10),
     }) + '\r\n'
 
