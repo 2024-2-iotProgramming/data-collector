@@ -13,7 +13,7 @@ def _DEFAULT_DUMMY_SERIAL_READLINE() -> str:
     return json.dumps({
         'L_Dist': random.randint(200, 20000) / 100,
         'R_Dist': random.randint(200, 20000) / 100,
-        'Mv': random.randint(0, 10),
+        'Mv': random.randint(0, 52),
     }) + '\r\n'
 
 
