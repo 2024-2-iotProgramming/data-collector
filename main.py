@@ -43,6 +43,9 @@ def main():
         data = ser.json()
         logging.info(f'{json.dumps(data)}')
 
+        if not data:
+            continue
+
         # 서버에 데이터 전송
         res = requests.post(TARGET_URL, data={
             'x': 1,
