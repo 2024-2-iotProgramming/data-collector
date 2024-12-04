@@ -32,11 +32,15 @@ class Serial(serial.Serial):
         while (line := self.readline()) == b'':
             pass
         try:
-            return json.loads(line.decode())
+            data = json.loads(line.decode())
+            assert isinstance(data, dict)
+            return data
         except json.JSONDecodeError:
             logging.error(f'잘못된 데이터가 수신되었습니다: {line}')
         except UnicodeDecodeError:
             logging.error(f'잘못된 인코딩 데이터가 수신되었습니다: {line}')
+        except AssertionError:
+            logging.error(f'잘못된 데이터 형식이 수신되었습니다: {line}')
         except Exception as e:
             logging.error(f'알 수 없는 오류가 발생했습니다: {e}')
         return {}
